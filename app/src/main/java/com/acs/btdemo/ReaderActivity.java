@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -1169,6 +1170,7 @@ public class  ReaderActivity extends AppCompatActivity implements
         @Override
         protected void bindView(WtrChildViewHolder holder, final ChildItem model, final int position) {
             holder.onBind(ReaderActivity.this, model);
+            holder.itemView.setTag(position);
             holder.itemView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {

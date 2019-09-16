@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -155,6 +156,38 @@ public class ItemWhtList extends AppCompatActivity{
         }, kode_wtr);
 
         setUpView();
+//        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
+//        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                /** Call data **/
+//                requestJsonObjectA(new ReaderActivity.VolleyCallback() {
+//                    @Override
+//                    public void onSuccess(JSONArray result) {
+//                        for(int i = 0; i < result.length(); i++) {
+//                            try {
+//                                JSONObject jsonObject = result.getJSONObject(i);
+//                                String judul= jsonObject.getString("kode_barang");
+//                                String uid= jsonObject.getString("uid_picked");
+//                                String qty= jsonObject.getString("qty");
+//                                Log.d("kode_item_rcv", judul);
+//                                dataItem.add(new ItemWhtModel(judul,uid,qty));
+//                            }
+//                            catch(JSONException e) {
+//                                dataItem.add(new ItemWhtModel("Error: " + e.getLocalizedMessage(),"error uid","error qty"));
+//                            }
+//                        }
+//                        listView = (RecyclerView) findViewById(R.id.listView);
+//
+//                        /** set up layout View **/
+//                        setUpView();
+//                    }
+//                }, kode_wtr);
+//
+//                setUpView();
+//                pullToRefresh.setRefreshing(true);
+//            }
+//        });
     }
 
     private void alert(String message) {

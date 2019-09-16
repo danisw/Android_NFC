@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,8 +50,10 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
     private static String uid_db_nospace2;
     public static String isIdentik;
     public static String picked_uid;
+    private CardView cv;
     // A reference to an adapter's callback.
     protected Adapter.Callback callback;
+    public int position;
 
 
     private Button btn_scan_id;
@@ -73,6 +76,8 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
         RL=itemView.findViewById(R.id.detail_layout);
         btn_pick = itemView.findViewById(R.id.btnPick);
         btn_pick.setEnabled(false);
+        cv=itemView.findViewById(R.id.myCard);
+        
     }
     public void onBind(final Context context, final ChildItem model) {
 
@@ -90,11 +95,9 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
         }
         if(qty_sisa_histori=="null"){
             qty_sisa_histori="0";
-            flag_sisa=0;
             txt_sisa_qty.setText(qty_sisa_histori);
         }else{
             txt_sisa_qty.setText(qty_sisa_histori);
-            flag_sisa=1;
         }
 
         //mTxtScan.setText(model.getUid());
@@ -377,6 +380,13 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                             Integer totalHis = hAwal+qtyInput;
                                             txt_history.setText(""+totalHis.toString());
                                             Log.d("uid_card","uid picked :"+uid_card_nospace_p);
+
+                                            //hide cardview when qtyawal = history picked
+                                            Integer qty_awal_int= Integer.valueOf(qty_awal);
+                                            if(qty_awal_int.equals(totalHis)){
+                                                Log.d("Int_compare", "True ");
+                                                cv.setVisibility(View.GONE);
+                                            }
 
                                             String qty_picked2 = qty_temp.getText().toString();
                                             postJsonObject(wtr_picked, kode_picked, nama_picked, qty_picked2, formattedDate,uid_card_nospace_p);

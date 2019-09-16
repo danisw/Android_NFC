@@ -311,7 +311,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/transmit_apdu"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                />
 
             <Button
                 android:id="@+id/button_TransmitEscapeCommand"
@@ -320,8 +321,6 @@
                 android:text="@string/transmit_escape_command"
                 android:visibility="gone"/>
         </LinearLayout>
-
-
 
     </LinearLayout>
 
@@ -356,12 +355,13 @@
         android:id="@+id/fab_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="end|bottom"
         android:backgroundTint="@color/accent"
         android:contentDescription="Submit"
         android:layout_margin="0dp"
         android:src="@drawable/save"
-        >
-
-    </android.support.design.widget.FloatingActionButton>
+        ></android.support.design.widget.FloatingActionButton>
 </android.support.design.widget.CoordinatorLayout>
