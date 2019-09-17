@@ -28,6 +28,7 @@ import android.bluetooth.BluetoothManager;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
@@ -60,11 +61,16 @@ public class DeviceScanActivity extends ListActivity {
     private BluetoothAdapter mBluetoothAdapter;
     private boolean mScanning;
     private Handler mHandler;
+
     private Button btn_scan;
+    private Button btn_logout;
+
     private ImageView img;
     private AnimationDrawable anim;
     private ImageView img2;
     private AnimationDrawable anim2;
+
+    private TextView txt_nama;
 
 
     private static final int REQUEST_ENABLE_BT = 1;
@@ -76,6 +82,9 @@ public class DeviceScanActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_content_simple);
+
+        btn_logout=findViewById(R.id.buttonLogout);
+
 
 //        getSupportActionBar().setTitle(R.string.title_devices);
         img=(ImageView) findViewById(R.id.anim_scan);
@@ -140,7 +149,19 @@ public class DeviceScanActivity extends ListActivity {
             anim2.stop();
         }
 
+        //getting the current user
+        Users user = SharedPrefManager.getInstance(this).getUser();
+        txt_nama=findViewById(R.id.nama_user);
+        txt_nama.setText(user.getName());
 
+        //logout button on Click
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                SharedPrefManager.getInstance(getApplicationContext()).logout();
+            }
+        });
 
 
         mHandler = new Handler();
