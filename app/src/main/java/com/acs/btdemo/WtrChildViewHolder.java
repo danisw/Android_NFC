@@ -67,9 +67,16 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
     public WtrChildViewHolder(View itemView) {
         super(itemView);
 
-        //get Epoch time untuk inisialisasi insert data ke database
-        long currentTime = Calendar.getInstance().getTimeInMillis();
-        epoch = Long.toString(currentTime);
+
+        String epoch2=ReaderActivity.epoch;
+        if(epoch2.equals("0")){
+            //get Epoch time untuk inisialisasi insert data ke database
+            long currentTime = Calendar.getInstance().getTimeInMillis();
+            epoch = Long.toString(currentTime);
+        }else{
+            epoch = ReaderActivity.epoch;
+        }
+
 
         isIdentik="nan";
         txt_no_WTR=itemView.findViewById(R.id.no_WTR_barang);
@@ -371,8 +378,8 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                         String user_Input = userInput.getText().toString();
                                         String qty_awal = txt_qty_.getText().toString();
                                         String history_qty_ = txt_history.getText().toString();
-                                        Log.d("qty_over", "userinput : "+Integer.valueOf(user_Input)+" | qty_awal : "+Integer.valueOf(qty_awal)+" | Histori : "+Integer.valueOf(history_qty_));
-                                        if ( (Integer.valueOf(user_Input) + Integer.valueOf(history_qty_)) > Integer.valueOf(qty_awal)) {
+                                        Log.d("qty_over", "userinput : "+Double.valueOf(user_Input)+" | qty_awal : "+Double.valueOf(qty_awal)+" | Histori : "+Double.valueOf(history_qty_));
+                                        if ( (Double.valueOf(user_Input) + Double.valueOf(history_qty_)) > Double.valueOf(qty_awal)) {
                                             alert2("Qty Over","Qty Over");
                                             //isIdentik="nan";
                                         } else {
@@ -383,15 +390,15 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                             String formattedDate = df.format(c);
                                             String history_awal = txt_history.getText().toString();
                                             qty_temp.setText(userInput.getText());
-                                            Integer hAwal = Integer.valueOf(history_awal);
-                                            Integer qtyInput = Integer.valueOf(userInput.getText().toString());
-                                            Integer totalHis = hAwal+qtyInput;
+                                            Double hAwal = Double.valueOf(history_awal);
+                                            Double qtyInput = Double.valueOf(userInput.getText().toString());
+                                            Double totalHis = hAwal+qtyInput;
                                             txt_history.setText(""+totalHis.toString());
                                             Log.d("uid_card","uid picked :"+uid_card_nospace_p);
 
                                             //hide cardview when qtyawal = history picked
-                                            Integer qty_awal_int= Integer.valueOf(qty_awal);
-                                            if(qty_awal_int.equals(totalHis)){
+                                            Double qty_awal_dob= Double.valueOf(qty_awal);
+                                            if(qty_awal_dob.equals(totalHis)){
                                                 Log.d("Int_compare", "True ");
                                                 cv.setVisibility(View.GONE);
                                             }
@@ -446,15 +453,15 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                         alert2("Berhasil",mes);
                         Log.d("My_success",""+response);
                         String sisa = txt_sisa_qty.getText().toString();
-                        Integer Sisa_int = Integer.valueOf(sisa);
-                        if(Sisa_int.equals(0)){
-                            Integer qty_wtr=Integer.valueOf(txt_qty_.getText().toString());
-                            Integer qty_pik = Integer.valueOf(qty_picked);
-                            Integer total = qty_wtr-qty_pik;
+                        Double Sisa_int = Double.valueOf(sisa);
+                        if(Sisa_int.equals(0.00)){
+                            Double qty_wtr=Double.valueOf(txt_qty_.getText().toString());
+                            Double qty_pik = Double.valueOf(qty_picked);
+                            Double total = qty_wtr-qty_pik;
                             txt_sisa_qty.setText(total.toString());
                         }else{
-                            Integer qty_pik = Integer.valueOf(qty_picked);
-                            Integer total = Sisa_int-qty_pik;
+                            Double qty_pik = Double.valueOf(qty_picked);
+                            Double total = Sisa_int-qty_pik;
                             txt_sisa_qty.setText(total.toString());
                         }
 

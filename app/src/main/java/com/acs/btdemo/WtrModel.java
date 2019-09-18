@@ -7,10 +7,21 @@ public class WtrModel {
     private String title;
     @SerializedName("waktu")
     private String tanggal_wtr;
+    @SerializedName("epoch")
+    private String epoch;
 
-    public WtrModel(String title, String tanggal_wtr) {
+    public String getEpoch() {
+        return epoch;
+    }
+
+    public void setEpoch(String epoch) {
+        this.epoch = epoch;
+    }
+
+    public WtrModel(String title, String tanggal_wtr, String epoch) {
         this.title = title;
         this.tanggal_wtr=tanggal_wtr;
+        this.epoch=epoch;
     }
 
     public String getTitle() {

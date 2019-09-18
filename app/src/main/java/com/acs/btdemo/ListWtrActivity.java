@@ -56,11 +56,14 @@ public class ListWtrActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     String no_WTR2 = model.getTitle();
+                    String epoch = model.getEpoch();
+
                     Log.d("URL_re", "onClick: gget title"+no_WTR);
                     final Intent intent = new Intent(ListWtrActivity.this, ReaderActivity.class);
                     intent.putExtra(ListWtrActivity.EXTRAS_DEVICE_NAME, mDeviceName);
                     intent.putExtra(ListWtrActivity.EXTRAS_DEVICE_ADDRESS, mDeviceAddress );
                     intent.putExtra("no_WTR", no_WTR2 );
+                    intent.putExtra("epoch", epoch );
                     startActivity(intent);
                 }
             });
@@ -115,13 +118,14 @@ public class ListWtrActivity extends AppCompatActivity {
                 for(int i = 0; i < result.length(); i++) {
                     try {
                         JSONObject jsonObject = result.getJSONObject(i);
-                        String judul= jsonObject.getString("no_WTR");
+                        String judul= jsonObject.getString("no_wtr");
                         String tanggal=jsonObject.getString("waktu");
+                        String epoch = jsonObject.getString("epoch");
                         Log.d("wtr_no", judul);
-                        dataItem.add(new WtrModel(judul,tanggal));
+                        dataItem.add(new WtrModel(judul,tanggal,epoch));
                     }
                     catch(JSONException e) {
-                        dataItem.add(new WtrModel("Error: " + e.getLocalizedMessage(),"error_tgl"));
+                        dataItem.add(new WtrModel("Error: " + e.getLocalizedMessage(),"error_tgl","error epoch"));
                     }
                 }
                 listView = (RecyclerView) findViewById(R.id.rv_wtr);
@@ -137,8 +141,8 @@ public class ListWtrActivity extends AppCompatActivity {
     /** Calling Data Function **/
     private void requestJsonObjectA(final ReaderActivity.VolleyCallback callback) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.1.250.116/rest-api/index.php/api/Item_2/";
-        //String url ="http://192.168.0.4/rest-api/index.php/api/Item_2/";
+        String url ="http://10.1.250.116/rest-api/index.php/api/WTR_header/";
+        //String url ="http://192.168.0.4/rest-api/index.php/api/WTR_header/";
 
         Log.d("ItemPickedwtr", url);
         JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {

@@ -194,6 +194,7 @@ public class  ReaderActivity extends AppCompatActivity implements
 
     public static String uid_final;
     public static String no_WTR;
+    public static String epoch;
 
     //private RecyclerViewAdapter adapter;
    // private RecyclerViewAdapterDetail adapter2;
@@ -1205,6 +1206,7 @@ public class  ReaderActivity extends AppCompatActivity implements
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         no_WTR=intent.getStringExtra("no_WTR");
+        epoch = intent.getStringExtra("epoch");
         Log.d("URL_re", "onCreate: "+no_WTR);
         txt_wtr=findViewById(R.id.wtr_display);
         txt_wtr.setText(no_WTR);
