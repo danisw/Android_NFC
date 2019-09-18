@@ -35,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ItemWhtList extends AppCompatActivity{
     private TextView stickyView;
@@ -47,6 +49,7 @@ public class ItemWhtList extends AppCompatActivity{
     private String kode_wtr;
     private String kode_uid;
     private CoordinatorLayout coordinatorLayout;
+    String epoch;
 
     /** set up adapter **/
     ArrayList<ItemWhtModel> dataItem = new ArrayList<>();
@@ -90,6 +93,10 @@ public class ItemWhtList extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_item_wht);
+
+        //get Epoch time untuk inisialisasi insert data ke database
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        epoch = Long.toString(currentTime);
 
         //Kode WTR
         Intent iin= getIntent();

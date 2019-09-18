@@ -50,6 +50,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
     private static String uid_db_nospace2;
     public static String isIdentik;
     public static String picked_uid;
+    public String no_lot;
     private CardView cv;
     // A reference to an adapter's callback.
     protected Adapter.Callback callback;
@@ -59,10 +60,17 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
     private Button btn_scan_id;
     private Button btn_pick;
     private Integer flag_sisa;
+
+    private String epoch;
     // Flag 0 baru, 1 masih ada, 2 habis
 
     public WtrChildViewHolder(View itemView) {
         super(itemView);
+
+        //get Epoch time untuk inisialisasi insert data ke database
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        epoch = Long.toString(currentTime);
+
         isIdentik="nan";
         txt_no_WTR=itemView.findViewById(R.id.no_WTR_barang);
         txt_kode_barang = itemView.findViewById(R.id.kode_barang);
@@ -138,7 +146,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                             Toast.LENGTH_SHORT).show();
                                     //cek qty
                                     String qty_rcv = jsonObject1.getString("qty_rcv");
-                                    final String no_lot =jsonObject1.getString("no_lot");
+                                    no_lot =jsonObject1.getString("no_lot");
                                     if(qty_rcv.equals("0")){
                                         alert3("Qty Kartu abis","abis bro");
                                     }
@@ -389,7 +397,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                             }
 
                                             String qty_picked2 = qty_temp.getText().toString();
-                                            postJsonObject(wtr_picked, kode_picked, nama_picked, qty_picked2, formattedDate,uid_card_nospace_p);
+                                            postJsonObject(wtr_picked, kode_picked, nama_picked, qty_picked2, formattedDate,uid_card_nospace_p,epoch, no_lot);
                                         }
                                     }
                                 })
@@ -424,7 +432,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                         .setMessage(message)
                         .show();
             }
-            private void postJsonObject(final String wtr_picked, final String kode_picked, final String nama_picked, final String qty_picked, final String formattedDate, final String uid_picked) {
+            private void postJsonObject(final String wtr_picked, final String kode_picked, final String nama_picked, final String qty_picked, final String formattedDate, final String uid_picked, final String epoch, final String no_lot) {
                 RequestQueue queue = Volley.newRequestQueue(context);
                final String url2 ="http://10.1.250.116/rest-api/index.php/api/Item_2/index_post/";
                // final String url2 ="http://192.168.0.4/rest-api/index.php/api/Item_2/index_post/";
@@ -468,6 +476,8 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                         map.put("qty",qty_picked);
                         map.put("time_input",formattedDate);
                         map.put("uid_picked",uid_picked);
+                        map.put("epoch",epoch);
+                        map.put("no_lot", no_lot);
                         return map;
                     }
                 };
