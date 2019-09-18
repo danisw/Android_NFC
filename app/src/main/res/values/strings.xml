@@ -18,6 +18,7 @@
 <resources>
 
     <string name="app_name">My Smartcard</string>
+    <string name="app_name_v">My Smartcard v.1</string>
     <string name="ble_not_supported">Bluetooth Low Energy is not supported.</string>
     <string name="title_devices">My Smartcard Scan</string>
     <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
@@ -82,5 +83,9 @@
     <!-- Menu items -->
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
+
+    <string name="nik">NIK</string>
+    <string name="password">Password</string>
+    <string name="btn_login"> Login </string>
 
 </resources>

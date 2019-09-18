@@ -1,8 +1,10 @@
 package com.acs.btdemo;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,11 +32,17 @@ class LoginActivity extends AppCompatActivity {
     EditText editTextUsername, editTextPassword;
     ProgressBar progressBar;
     String id_user_db, username_db, nama_db;
+    AnimationDrawable animationDrawable;
     
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        ConstraintLayout cl = (ConstraintLayout) findViewById(R.id.cl);
+        animationDrawable =(AnimationDrawable) cl.getBackground();
+        animationDrawable.setEnterFadeDuration(5000);
+        animationDrawable.setExitFadeDuration(2000);
 
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
@@ -54,6 +62,20 @@ class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (animationDrawable != null && !animationDrawable.isRunning())
+            animationDrawable.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (animationDrawable != null && animationDrawable.isRunning())
+            animationDrawable.stop();
     }
 
     private void userLogin() {
