@@ -12,7 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -43,6 +45,12 @@ public class ListWtrActivity extends AppCompatActivity {
     private String mDeviceAddress;
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
+
+    /* Spinner and Button */
+    private Spinner sCategory;
+    private Spinner sWhDest;
+    private Spinner sWhSource;
+    private Button mCari;
 
     /** set up adapter **/
     ArrayList<WtrModel> dataItem = new ArrayList<>();
@@ -84,6 +92,15 @@ public class ListWtrActivity extends AppCompatActivity {
         }
     };
 
+    /** set up Spinner value **/
+    String [] sCategory_value ={"RM","SP","WIP","FG"};
+    String [] sWhDest_value={"Gudang Packing"};
+    String [] items_value_dest = new String[]{ "30"};
+    String [] sWhSource_value={"Gudang Biskuit","Gudang Produksi Biskuit","Gudang Wafer","Gudang Produksi Wafer",
+            "Gudang Formulasi", "Gudang Produksi Formulasi","Gudang GA","Gudang Retur"};
+    String [] items_value_source = new String[]{ "42", "25","43","40","37","45","28","33"};
+
+
     /** start activity **/
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,27 +128,61 @@ public class ListWtrActivity extends AppCompatActivity {
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
 
-        /** Call data **/
-        requestJsonObjectA(new ReaderActivity.VolleyCallback() {
-            @Override
-            public void onSuccess(JSONArray result) {
-                for(int i = 0; i < result.length(); i++) {
-                    try {
-                        JSONObject jsonObject = result.getJSONObject(i);
-                        String judul= jsonObject.getString("no_wtr");
-                        String tanggal=jsonObject.getString("waktu");
-                        String epoch = jsonObject.getString("epoch");
-                        Log.d("wtr_no", judul);
-                        dataItem.add(new WtrModel(judul,tanggal,epoch));
-                    }
-                    catch(JSONException e) {
-                        dataItem.add(new WtrModel("Error: " + e.getLocalizedMessage(),"error_tgl","error epoch"));
-                    }
-                }
-                listView = (RecyclerView) findViewById(R.id.rv_wtr);
+        //initialize spinner adapter
+        sCategory= findViewById(R.id.spinner_cat);
+        sWhDest=findViewById(R.id.spinner_wh_dest);
+        sWhSource=findViewById(R.id.spinner_wh_asal);
 
-                /** set up layout View **/
-                setUpView();
+        ArrayAdapter<String> adapter_cat = new ArrayAdapter<String>(ListWtrActivity.this, R.layout.list_itemcategory, R.id.IcatSpinnerText, sCategory_value);
+        ArrayAdapter<String> adapter_whd = new ArrayAdapter<String>(ListWtrActivity.this,  R.layout.list_itemwhdest,R.id.WhdestSpinnerText ,sWhDest_value);
+        ArrayAdapter<String> adapter_whsc = new ArrayAdapter<String>(ListWtrActivity.this, R.layout.list_itemwhsource,R.id.WhscSpinnerText, sWhSource_value);
+
+        sCategory.setAdapter(adapter_cat);
+        sWhDest.setAdapter(adapter_whd);
+        sWhSource.setAdapter(adapter_whsc);
+
+        //give default value to spinner
+        sCategory.setSelection(0);
+        sWhDest.setSelection(0);
+        sWhSource.setSelection(0);
+
+        // initialize button cari
+        mCari=findViewById(R.id.btn_cari);
+
+        //on click button cari, retrieve data rv
+        mCari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cat_selected = sCategory.getSelectedItem().toString();
+                String whdest_selected = items_value_dest[ sWhDest.getSelectedItemPosition() ];
+                String whsc_selected = items_value_source[ sWhSource.getSelectedItemPosition() ];
+
+                /** Call data **/
+                requestJsonObjectA(new ReaderActivity.VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONArray result) {
+                        Log.d("Spinner",result.toString());
+                        dataItem.clear();
+                        for(int i = 0; i < result.length(); i++) {
+                            try {
+                                JSONObject jsonObject = result.getJSONObject(i);
+                                String judul= jsonObject.getString("no_wtr");
+                                String tanggal=jsonObject.getString("waktu");
+                                String epoch = jsonObject.getString("epoch");
+                                Log.d("wtr_no", judul);
+                                dataItem.add(new WtrModel(judul,tanggal,epoch));
+                            }
+                            catch(JSONException e) {
+                                dataItem.add(new WtrModel("Error: " + e.getLocalizedMessage(),"error_tgl","error epoch"));
+                            }
+                        }
+                        listView = (RecyclerView) findViewById(R.id.rv_wtr);
+
+                        /** set up layout View **/
+                        setUpView();
+                    }
+                },cat_selected,whdest_selected,whsc_selected);
+
             }
         });
 
@@ -139,9 +190,9 @@ public class ListWtrActivity extends AppCompatActivity {
     }
 
     /** Calling Data Function **/
-    private void requestJsonObjectA(final ReaderActivity.VolleyCallback callback) {
+    private void requestJsonObjectA(final ReaderActivity.VolleyCallback callback, final String cat_selected, final String whdest_selected, final String whsc_selected ) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.1.250.116/rest-api/index.php/api/WTR_header/";
+        String url ="http://10.1.250.116/rest-api/index.php/api/WTR_header/"+cat_selected+"/"+whdest_selected+"/"+whsc_selected;
         //String url ="http://192.168.0.4/rest-api/index.php/api/WTR_header/";
 
         Log.d("ItemPickedwtr", url);
