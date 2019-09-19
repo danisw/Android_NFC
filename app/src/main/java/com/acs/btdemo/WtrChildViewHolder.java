@@ -153,7 +153,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                             Toast.LENGTH_SHORT).show();
                                     //cek qty
                                     String qty_rcv = jsonObject1.getString("qty_sisa");
-                                   // no_lot =jsonObject1.getString("no_lot");
+                                   no_lot =jsonObject1.getString("nih_lot");
                                     if(qty_rcv.equals("0")){
                                         alert3("Qty Kartu abis","abis bro");
                                     }
