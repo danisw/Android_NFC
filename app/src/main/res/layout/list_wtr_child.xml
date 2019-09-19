@@ -16,6 +16,7 @@
         app:cardElevation="10dp"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true"
+        android:id="@+id/cv_wtr"
         >
         <FrameLayout
             android:background="@color/colorPrimary"
