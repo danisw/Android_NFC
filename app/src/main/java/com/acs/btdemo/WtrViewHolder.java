@@ -25,7 +25,7 @@ public class WtrViewHolder extends RecyclerView.ViewHolder {
         no_wtr.setText(model.getTitle());
         tanggal.setText(model.getTanggal_wtr());
         epoch = model.getEpoch();
-        Log.d("epoch", "onBind: "+epoch);
+       // Log.d("epoch", "onBind: "+epoch);
         if(!epoch.equals("0")){
             cv.setCardBackgroundColor(Color.GRAY);
         }

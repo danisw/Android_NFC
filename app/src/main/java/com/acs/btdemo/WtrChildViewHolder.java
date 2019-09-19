@@ -152,8 +152,8 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                             "UID sama",
                                             Toast.LENGTH_SHORT).show();
                                     //cek qty
-                                    String qty_rcv = jsonObject1.getString("qty_rcv");
-                                    no_lot =jsonObject1.getString("no_lot");
+                                    String qty_rcv = jsonObject1.getString("qty_sisa");
+                                   // no_lot =jsonObject1.getString("no_lot");
                                     if(qty_rcv.equals("0")){
                                         alert3("Qty Kartu abis","abis bro");
                                     }
@@ -170,9 +170,9 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
 
                                                         if(jsonObject != null){
                                                             String exp_date = jsonObject.getString("exp_date");
-                                                            String no_rcv = jsonObject.getString("no_rcv");
+                                                           // String no_rcv = jsonObject.getString("no_rcv");
                                                             String uid_rcv = jsonObject.getString("uid");
-                                                            String qty_rcv=jsonObject.getString("qty_rcv");
+                                                            String qty_rcv=jsonObject.getString("qty");
 
                                                             boolean isIdentic = cekUid(uid_rcv);
                                                             Log.d("cek_uid_exp", "is identik"+isIdentic);
@@ -189,7 +189,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                                                 btn_pick.setVisibility(View.VISIBLE);
 
                                                             } else {
-                                                                String message = kode_picked+" \n" +exp_date+"\n Expired mendekati \n"+exp_date+"\n"+no_lot+". Yakin memilih data Ini ?";
+                                                                String message = kode_picked+" \n" +exp_date+"\n Expired mendekati \n"+exp_date+"\n. Yakin memilih data Ini ?";
                                                                 alert(message);
                                                                 isIdentik = "nan";
                                                             }
@@ -222,13 +222,13 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                                     return false;
                                                 }
                                             }
-                                        },kode_picked,no_lot);
+                                        },kode_picked);
                                     }
                                 }
                                 catch(JSONException e) {
                                     //no action
                                     isIdentik="nan";
-                                    String message = "UID berbeda, cari nomor WTR lain";
+                                    String message = "Array not found : "+e;
                                     alert(message);
                                 }
                             }
@@ -272,9 +272,9 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                         .show();
             }
 
-            private void cekExpired(final ReaderActivity.VolleyCallback callback,String kode_picked, String no_lot) {
+            private void cekExpired(final ReaderActivity.VolleyCallback callback,String kode_picked) {
                 RequestQueue queue = Volley.newRequestQueue(context);
-                String url ="http://10.1.250.116/rest-api/index.php/api/Cek/index_get/"+kode_picked+"/"+no_lot;
+                String url ="http://10.1.250.116/rest-api/index.php/api/Cek/index_get/"+kode_picked;
                 //String url ="http://192.168.0.4/rest-api/index.php/api/Cek/index_get/"+kode_picked+"/"+no_lot;
                 Log.d("URL_C", "cekExpired: "+url);
                 //String url ="http://192.168.0.5/rest-api/index.php/api/Cek/index_get/"+kode_picked+"/"+qty_picked;
