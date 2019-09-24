@@ -162,6 +162,7 @@ public class ListWtrActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(JSONArray result) {
                         Log.d("Spinner",result.toString());
+
                         dataItem.clear();
                         for(int i = 0; i < result.length(); i++) {
                             try {

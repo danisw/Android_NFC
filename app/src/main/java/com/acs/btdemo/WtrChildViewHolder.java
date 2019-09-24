@@ -152,8 +152,8 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                             "UID sama",
                                             Toast.LENGTH_SHORT).show();
                                     //cek qty
-                                    String qty_rcv = jsonObject1.getString("qty_sisa");
-                                   no_lot =jsonObject1.getString("nih_lot");
+                                    String qty_rcv = jsonObject1.getString("nic_qty");
+                                   no_lot =jsonObject1.getString("nic_lot");
                                     if(qty_rcv.equals("0")){
                                         alert3("Qty Kartu abis","abis bro");
                                     }
@@ -169,10 +169,10 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                                         Log.d("obj_cek",jsonObject.toString());
 
                                                         if(jsonObject != null){
-                                                            String exp_date = jsonObject.getString("exp_date");
+                                                            String exp_date = jsonObject.getString("nic_expired");
                                                            // String no_rcv = jsonObject.getString("no_rcv");
-                                                            String uid_rcv = jsonObject.getString("uid");
-                                                            String qty_rcv=jsonObject.getString("qty");
+                                                            String uid_rcv = jsonObject.getString("nic_uid_nfc");
+                                                            String qty_rcv=jsonObject.getString("nic_qty");
 
                                                             boolean isIdentic = cekUid(uid_rcv);
                                                             Log.d("cek_uid_exp", "is identik"+isIdentic);
