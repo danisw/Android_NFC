@@ -138,6 +138,10 @@ public class ItemWhtList extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ItemWhtList.this, DataHeaderWHT.class);
+                intent.putExtra("id_wtr",id_wtr);
+                intent.putExtra("kode_WTR",kode_wtr);
+                intent.putExtra("dest_wh","Gudang Packing");
+                intent.putExtra("sc_wh","Gudang Biskuit");
                 startActivity(intent);
             }
         });
