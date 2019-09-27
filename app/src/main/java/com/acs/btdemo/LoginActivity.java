@@ -28,7 +28,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     EditText editTextUsername, editTextPassword;
     ProgressBar progressBar;
     String id_user_db, username_db, nama_db;
