@@ -65,6 +65,7 @@ public class ListWtrActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     String no_WTR2 = model.getTitle();
                     String epoch = model.getEpoch();
+                    String id_wtr = model.getId_wtr();
 
                     Log.d("URL_re", "onClick: gget title"+no_WTR);
                     final Intent intent = new Intent(ListWtrActivity.this, ReaderActivity.class);
@@ -72,6 +73,7 @@ public class ListWtrActivity extends AppCompatActivity {
                     intent.putExtra(ListWtrActivity.EXTRAS_DEVICE_ADDRESS, mDeviceAddress );
                     intent.putExtra("no_WTR", no_WTR2 );
                     intent.putExtra("epoch", epoch );
+                    intent.putExtra("id_wtr",id_wtr);
                     startActivity(intent);
                 }
             });
@@ -170,11 +172,12 @@ public class ListWtrActivity extends AppCompatActivity {
                                 String judul= jsonObject.getString("no_wtr");
                                 String tanggal=jsonObject.getString("waktu");
                                 String epoch = jsonObject.getString("epoch");
+                                String id_wtr = jsonObject.getString("id_wtr");
                                 Log.d("wtr_no", judul);
-                                dataItem.add(new WtrModel(judul,tanggal,epoch));
+                                dataItem.add(new WtrModel(judul,tanggal,epoch,id_wtr));
                             }
                             catch(JSONException e) {
-                                dataItem.add(new WtrModel("Error: " + e.getLocalizedMessage(),"error_tgl","error epoch"));
+                                dataItem.add(new WtrModel("Error: " + e.getLocalizedMessage(),"error_tgl","error epoch","error id wtr"));
                             }
                         }
                         listView = (RecyclerView) findViewById(R.id.rv_wtr);

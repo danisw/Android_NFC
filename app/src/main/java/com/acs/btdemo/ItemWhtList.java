@@ -48,6 +48,7 @@ public class ItemWhtList extends AppCompatActivity{
     private Button btn_konfirm;
     private String kode_wtr;
     private String kode_uid;
+    private  String id_wtr;
     private CoordinatorLayout coordinatorLayout;
     String epoch;
 
@@ -105,7 +106,9 @@ public class ItemWhtList extends AppCompatActivity{
         {
             String j =(String) b.get("no_wtr");
             String i =(String) b.get("no_uid");
+            String k = (String) b.get("id_wtr");
             kode_wtr=j;
+            id_wtr=k;
             kode_uid=i.replace(" ", "").substring(0,8);;
         }else{
             finish();

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
  * Copyright (C) 2014-2018 Advanced Card Systems Ltd.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,7 +17,9 @@
 
 package com.acs.btdemo;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.Manifest;
 import android.app.Activity;
@@ -41,6 +43,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +55,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Activity for scanning and displaying available Bluetooth LE devices.
@@ -72,11 +85,11 @@ public class DeviceScanActivity extends ListActivity {
 
     private TextView txt_nama;
 
-
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int REQUEST_ACCESS_COARSE_LOCATION = 2;
     /* Stops scanning after 10 seconds. */
     private static final long SCAN_PERIOD = 10000;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -384,16 +397,53 @@ public class DeviceScanActivity extends ListActivity {
                 viewHolder = (ViewHolder) view.getTag();
             }
 
-            BluetoothDevice device = mLeDevices.get(i);
-            final String deviceName = device.getName();
-            if (deviceName != null && deviceName.length() > 0)
-                viewHolder.deviceName.setText(deviceName);
-            else
-                viewHolder.deviceName.setText(R.string.unknown_device);
-            viewHolder.deviceAddress.setText(device.getAddress());
+            final BluetoothDevice device = mLeDevices.get(i);
+            //GET DATA DEVICE ADDRESS FROM Db
+            final String deviceAddress = device.getAddress().replace(":","");
+            final String deviceName=device.getName();
 
+
+            if (deviceName != null && deviceName.length() > 0) {
+                //String nama= cek_address(device.getAddress().replace(":",""));
+                viewHolder.deviceName.setText(deviceName);
+                //deviceName = device.getName();
+            }else {
+                viewHolder.deviceName.setText(R.string.unknown_device);
+                viewHolder.deviceAddress.setText(device.getAddress());
+            }
             return view;
         }
+
+    }
+
+    private String cek_address(final String address) {
+        final List<String> new_address = new ArrayList<String>();
+
+        /** Call data **/
+        requestJsonObjectA(new ReaderActivity.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONArray result) {
+                Log.d("device_result",result.toString());
+                for(int i = 0; i < result.length(); i++) {
+                    try {
+                        JSONObject jsonObject = result.getJSONObject(i);
+                        String nama_device= jsonObject.getString("nama_device");
+                        String alamat_device=jsonObject.getString("alamat_device");
+                        new_address.add(nama_device);
+                        Log.d("new_address_1",new_address.toString());
+                    }
+                    catch(JSONException e) {
+                        Log.d("errorrr",""+e);
+                    }
+                }
+               // listView = (RecyclerView) findViewById(R.id.rv_wtr);
+
+                /** set up layout View **/
+               // setUpView();
+            }
+        },address);
+        Log.d("new_address_2", new_address.toString());
+        return new_address.toString();
     }
 
     /* Device scan callback. */
@@ -416,4 +466,26 @@ public class DeviceScanActivity extends ListActivity {
         TextView deviceName;
         TextView deviceAddress;
     }
+   /** Calling Data Function **/
+    private void requestJsonObjectA(final ReaderActivity.VolleyCallback callback, final String address) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="http://10.1.250.116/rest-api/index.php/api/Device_query/"+address;
+        //String url ="http://192.168.0.4/rest-api/index.php/api/WTR_header/";
+        Log.d("device_url", url);
+        JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray jsonArray) {
+                callback.onSuccess(jsonArray);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Eroor", "Error " + error.getMessage());
+            }
+        });
+        queue.add(request);
+    }
+
 }

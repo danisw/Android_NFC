@@ -13,6 +13,7 @@ public class WtrViewHolder extends RecyclerView.ViewHolder {
     TextView tanggal;
     CardView cv;
     String epoch;
+
     public WtrViewHolder(View itemView) {
         super(itemView);
         no_wtr=itemView.findViewById(R.id.kode_item_wtr);
