@@ -43,6 +43,7 @@
         <activity android:name=".ItemWhtList" />
         <activity android:name=".ListWtrActivity" />
         <activity android:name=".DeviceScanActivity" />
+        <activity android:name=".DataHeaderWHT"/>
     </application>
 
 </manifest>

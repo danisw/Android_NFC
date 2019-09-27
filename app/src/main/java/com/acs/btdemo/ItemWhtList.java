@@ -137,7 +137,8 @@ public class ItemWhtList extends AppCompatActivity{
         btn_konfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                alert("WHT1237689");
+                Intent intent = new Intent(ItemWhtList.this, DataHeaderWHT.class);
+                startActivity(intent);
             }
         });
 
