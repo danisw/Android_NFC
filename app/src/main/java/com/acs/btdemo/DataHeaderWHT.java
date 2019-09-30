@@ -9,8 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -39,6 +41,8 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
 
     String selected_name;
     String selected_value;
+
+    Button btn_konfirm;
 
     //An ArrayList for Spinner Items
     private ArrayList<String> keterangan;
@@ -72,6 +76,7 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
         sc_wh_txt = findViewById(R.id.sc_whs);
         dest_wh_txt = findViewById(R.id.dest_wh);
         sp_ket_retur= findViewById(R.id.ket_retur);
+        btn_konfirm=findViewById(R.id.btn_konfirm);
 
 
         id_wtr_txt.setText(id_wtr);
@@ -87,6 +92,13 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
 
         //get data Sinner
         get_data_spinner();
+
+        btn_konfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DataHeaderWHT.this,selected_name+" | "+selected_value,Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

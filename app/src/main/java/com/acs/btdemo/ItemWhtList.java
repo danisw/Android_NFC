@@ -18,9 +18,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ItemWhtList extends AppCompatActivity{
+public class ItemWhtList extends AppCompatActivity {
     private TextView stickyView;
     private RecyclerView listView;
     private View heroImageView;
@@ -266,6 +268,5 @@ public class ItemWhtList extends AppCompatActivity{
 
     private void setOnClickListener() {
     }
-
 
 }

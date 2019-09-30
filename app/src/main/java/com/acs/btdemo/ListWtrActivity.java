@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -21,6 +22,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -31,7 +33,7 @@ import java.util.ArrayList;
 
 import static com.acs.btdemo.ReaderActivity.no_WTR;
 
-public class ListWtrActivity extends AppCompatActivity {
+public class ListWtrActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
     private View heroImageView;
     private CoordinatorLayout mCLayout;
@@ -51,6 +53,13 @@ public class ListWtrActivity extends AppCompatActivity {
     private Spinner sWhDest;
     private Spinner sWhSource;
     private Button mCari;
+
+    //An ArrayList for Spinner Items
+    private ArrayList<String> whs;
+    //JSON Array
+    private JSONArray result;
+    //tampungan  selected whs
+    String whsc_selected;
 
     /** set up adapter **/
     ArrayList<WtrModel> dataItem = new ArrayList<>();
@@ -98,9 +107,9 @@ public class ListWtrActivity extends AppCompatActivity {
     String [] sCategory_value ={"RM","SP","WIP","FG"};
     String [] sWhDest_value={"Gudang Packing"};
     String [] items_value_dest = new String[]{ "30"};
-    String [] sWhSource_value={"Gudang Biskuit","Gudang Produksi Biskuit","Gudang Wafer","Gudang Produksi Wafer",
-            "Gudang Formulasi", "Gudang Produksi Formulasi","Gudang GA","Gudang Retur"};
-    String [] items_value_source = new String[]{ "42", "25","43","40","37","45","28","33"};
+//    String [] sWhSource_value={"Gudang Biskuit","Gudang Produksi Biskuit","Gudang Wafer","Gudang Produksi Wafer",
+//            "Gudang Formulasi", "Gudang Produksi Formulasi","Gudang GA","Gudang Retur"};
+    //String [] items_value_source = new String[]{ "42", "25","43","40","37","45","28","33"};
 
 
     /** start activity **/
@@ -135,18 +144,27 @@ public class ListWtrActivity extends AppCompatActivity {
         sWhDest=findViewById(R.id.spinner_wh_dest);
         sWhSource=findViewById(R.id.spinner_wh_asal);
 
+        //Initializing the ArrayList
+        whs = new ArrayList<String>();
+
+        //Adding an Item Selected Listener to our Spinner
+        sWhSource.setOnItemSelectedListener(this);
+
+        //get data Sinner
+        get_data_spinner();
+
         ArrayAdapter<String> adapter_cat = new ArrayAdapter<String>(ListWtrActivity.this, R.layout.list_itemcategory, R.id.IcatSpinnerText, sCategory_value);
         ArrayAdapter<String> adapter_whd = new ArrayAdapter<String>(ListWtrActivity.this,  R.layout.list_itemwhdest,R.id.WhdestSpinnerText ,sWhDest_value);
-        ArrayAdapter<String> adapter_whsc = new ArrayAdapter<String>(ListWtrActivity.this, R.layout.list_itemwhsource,R.id.WhscSpinnerText, sWhSource_value);
+       // ArrayAdapter<String> adapter_whsc = new ArrayAdapter<String>(ListWtrActivity.this, R.layout.list_itemwhsource,R.id.WhscSpinnerText, sWhSource_value);
 
         sCategory.setAdapter(adapter_cat);
         sWhDest.setAdapter(adapter_whd);
-        sWhSource.setAdapter(adapter_whsc);
+       // sWhSource.setAdapter(adapter_whsc);
 
         //give default value to spinner
         sCategory.setSelection(0);
         sWhDest.setSelection(0);
-        sWhSource.setSelection(0);
+        //sWhSource.setSelection(0);
 
         // initialize button cari
         mCari=findViewById(R.id.btn_cari);
@@ -157,8 +175,8 @@ public class ListWtrActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String cat_selected = sCategory.getSelectedItem().toString();
                 String whdest_selected = items_value_dest[ sWhDest.getSelectedItemPosition() ];
-                String whsc_selected = items_value_source[ sWhSource.getSelectedItemPosition() ];
-
+               // String whsc_selected = items_value_source[ sWhSource.getSelectedItemPosition() ];
+                Toast.makeText(ListWtrActivity.this,whsc_selected+" | "+whsc_selected,Toast.LENGTH_SHORT).show();
                 /** Call data **/
                 requestJsonObjectA(new ReaderActivity.VolleyCallback() {
                     @Override
@@ -193,6 +211,95 @@ public class ListWtrActivity extends AppCompatActivity {
         setUpView();
     }
 
+    private void get_data_spinner() {
+        //Creating a string request
+        StringRequest stringRequest = new StringRequest(SpinnerWhs.DATA_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("retur", "onResponse: "+response.toString());
+                        JSONObject j = null;
+                        try {
+                            //Parsing the fetched Json String to JSON Object
+                            j = new JSONObject(response);
+
+                            //Storing the Array of JSON String to our JSON Array
+                            result = j.getJSONArray(SpinnerWhs.JSON_ARRAY);
+                            Log.d("retur", "onResponse: "+result);
+
+                            //Calling method getStudents to get the students from the JSON Array
+                            getWarehouse(result);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        //Creating a request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
+
+    private void getWarehouse(JSONArray j) {
+        //Traversing through all the items in the json array
+        for(int i=0;i<j.length();i++){
+            try {
+                //Getting json object
+                JSONObject json = j.getJSONObject(i);
+                Log.d("retur", "getKeterangan: "+json.getString(SpinnerWhs.TAG_NAMA_KETERANGAN));
+
+                //Adding the name of the information to array list
+                whs.add(json.getString(SpinnerWhs.TAG_NAMA_KETERANGAN));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //Setting adapter to show the items in the spinner
+        sWhSource.setAdapter(new ArrayAdapter<String>(ListWtrActivity.this, R.layout.list_itemwhsource,R.id.WhscSpinnerText,  whs));
+
+    }
+    //Method to get value keterangan of a particular position
+    private String getValue(int position){
+        String value="";
+        try {
+            //Getating object of given index
+            JSONObject json = result.getJSONObject(position);
+
+            //Fetching name from that object
+            value = json.getString(SpinnerWhs.TAG_VALUE);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //Returning the value
+        return value;
+    }
+
+    //Method to get Name of a particular position
+    private String getName(int position){
+        String name="";
+        try {
+            //Getating object of given index
+            JSONObject json = result.getJSONObject(position);
+
+            //Fetching name from that object
+            name = json.getString(SpinnerWhs.TAG_NAMA_KETERANGAN);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //Returning the name
+        return name;
+    }
+
+
     /** Calling Data Function **/
     private void requestJsonObjectA(final ReaderActivity.VolleyCallback callback, final String cat_selected, final String whdest_selected, final String whsc_selected ) {
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -223,4 +330,13 @@ public class ListWtrActivity extends AppCompatActivity {
         adapter.setCallback(adapterListeners);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        whsc_selected=getValue(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        whsc_selected="pilih";
+    }
 }
