@@ -54,129 +54,183 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="ID WTR"/>
+                android:text="ID WTR"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
 
             <TextView
                 android:id="@+id/id_WTR"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="112" />
+                android:text="112"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="10pt"
             >
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="NO WTR"/>
+                android:text="NO WTR"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
             <TextView
                 android:id="@+id/no_WTR"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="WTR12345"/>
+                android:text="WTR12345"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+           >
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Dest WH "/>
+                android:text="Dest WH "
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
             <TextView
                 android:id="@+id/dest_wh"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Gudang A"/>
+                android:text="Gudang A"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+           >
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Dest WH "/>
+                android:text="Source WH "
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
             <TextView
-                android:id="@+id/sc"
-                android:layout_width="100dp"
+                android:id="@+id/sc_whs"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Gudang B"/>
+                android:text="Gudang B"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Keterangan Retur"/>
+                android:text="Keterangan Retur"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
             <Spinner
                 android:id="@+id/ket_retur"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+           >
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Kontainer"/>
+                android:text="Kontainer"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
             <EditText
                 android:id="@+id/kontainer"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Kontainer A"/>
+                android:text="Kontainer A"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Driver"/>
+                android:text="Driver"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
             <EditText
                 android:id="@+id/driver"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Bejo"/>
+                android:text="Bejo"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+           >
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="Plat Nomor"/>
+                android:text="Plat Nomor"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
             <EditText
                 android:id="@+id/nopol"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="B 49 US"/>
+                android:text="B 49 US"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+           >
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="No Seal"/>
+                android:text="No Seal"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
             <EditText
                 android:id="@+id/noseal"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="12345"/>
+                android:text="12345"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
         </LinearLayout>
 
     </LinearLayout>
