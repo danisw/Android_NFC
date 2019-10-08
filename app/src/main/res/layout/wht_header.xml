@@ -232,6 +232,26 @@
                 android:textSize="10pt"
                 android:layout_marginLeft="20dp"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Memo"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"/>
+            <EditText
+                android:id="@+id/memo"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="12345"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="10pt"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 

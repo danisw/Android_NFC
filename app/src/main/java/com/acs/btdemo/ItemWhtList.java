@@ -51,8 +51,9 @@ public class ItemWhtList extends AppCompatActivity {
     private String kode_wtr;
     private String kode_uid;
     private  String id_wtr;
+    private String cat_selected;
     private CoordinatorLayout coordinatorLayout;
-    String epoch;
+    String epoch,sc_wh,dest_wh;
 
     /** set up adapter **/
     ArrayList<ItemWhtModel> dataItem = new ArrayList<>();
@@ -98,8 +99,8 @@ public class ItemWhtList extends AppCompatActivity {
         setContentView(R.layout.list_item_wht);
 
         //get Epoch time untuk inisialisasi insert data ke database
-        long currentTime = Calendar.getInstance().getTimeInMillis();
-        epoch = Long.toString(currentTime);
+        //long currentTime = Calendar.getInstance().getTimeInMillis();
+        //epoch = Long.toString(currentTime);
 
         //Kode WTR
         Intent iin= getIntent();
@@ -109,9 +110,19 @@ public class ItemWhtList extends AppCompatActivity {
             String j =(String) b.get("no_wtr");
             String i =(String) b.get("no_uid");
             String k = (String) b.get("id_wtr");
+            String l = (String) b.get("sc_wh");
+            String m = (String) b.get("cat_selected");
+            String n = (String) b.get("no_uid");
+            String o = (String) b.get("epoch");
+            String p = (String) b.get("wh_desc_id");
+
             kode_wtr=j;
             id_wtr=k;
-            kode_uid=i.replace(" ", "").substring(0,8);;
+            kode_uid=i.replace(" ", "").substring(0,8);
+            cat_selected=m;
+            sc_wh=l;
+            dest_wh=p;
+            epoch=o;
         }else{
             finish();
         }
@@ -142,8 +153,10 @@ public class ItemWhtList extends AppCompatActivity {
                 Intent intent = new Intent(ItemWhtList.this, DataHeaderWHT.class);
                 intent.putExtra("id_wtr",id_wtr);
                 intent.putExtra("kode_WTR",kode_wtr);
-                intent.putExtra("dest_wh","Gudang Packing");
-                intent.putExtra("sc_wh","Gudang Biskuit");
+                intent.putExtra("dest_wh",dest_wh);
+                intent.putExtra("sc_wh",sc_wh);
+                intent.putExtra("epoch",epoch);
+                intent.putExtra("cat_selected",cat_selected);
                 startActivity(intent);
             }
         });
@@ -173,38 +186,6 @@ public class ItemWhtList extends AppCompatActivity {
         }, kode_wtr);
 
         setUpView();
-//        final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pullToRefresh);
-//        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                /** Call data **/
-//                requestJsonObjectA(new ReaderActivity.VolleyCallback() {
-//                    @Override
-//                    public void onSuccess(JSONArray result) {
-//                        for(int i = 0; i < result.length(); i++) {
-//                            try {
-//                                JSONObject jsonObject = result.getJSONObject(i);
-//                                String judul= jsonObject.getString("kode_barang");
-//                                String uid= jsonObject.getString("uid_picked");
-//                                String qty= jsonObject.getString("qty");
-//                                Log.d("kode_item_rcv", judul);
-//                                dataItem.add(new ItemWhtModel(judul,uid,qty));
-//                            }
-//                            catch(JSONException e) {
-//                                dataItem.add(new ItemWhtModel("Error: " + e.getLocalizedMessage(),"error uid","error qty"));
-//                            }
-//                        }
-//                        listView = (RecyclerView) findViewById(R.id.listView);
-//
-//                        /** set up layout View **/
-//                        setUpView();
-//                    }
-//                }, kode_wtr);
-//
-//                setUpView();
-//                pullToRefresh.setRefreshing(true);
-//            }
-//        });
     }
 
     private void alert(String message) {

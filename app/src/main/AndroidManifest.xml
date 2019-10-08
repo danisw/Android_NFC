@@ -44,6 +44,7 @@
         <activity android:name=".ListWtrActivity" />
         <activity android:name=".DeviceScanActivity" />
         <activity android:name=".DataHeaderWHT"/>
+        <activity android:name=".UserProfile"/>
     </application>
 
 </manifest>

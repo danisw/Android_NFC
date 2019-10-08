@@ -96,6 +96,12 @@
         android:layout_marginTop="100dp"
         android:id="@+id/nama_user"
         android:text="INI NAMA"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:id="@+id/wh_name"
+        android:text="INI Wh name"/>
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:id="@+id/nested_scroll_view"

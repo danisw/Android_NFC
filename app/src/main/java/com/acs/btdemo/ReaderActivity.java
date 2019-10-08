@@ -196,6 +196,8 @@ public class  ReaderActivity extends AppCompatActivity implements
     public static String no_WTR;
     public static String epoch;
     public static String id_wtr;
+    public static String  wh_desc_id;
+    public static String cat_selected;
 
     //private RecyclerViewAdapter adapter;
    // private RecyclerViewAdapterDetail adapter2;
@@ -337,6 +339,9 @@ public class  ReaderActivity extends AppCompatActivity implements
                 Intent intent = new Intent(ReaderActivity.this, ItemWhtList.class);
                 intent.putExtra("no_wtr", no_WTR);
                 intent.putExtra("id_wtr",id_wtr);
+                intent.putExtra("epoch",epoch);
+                intent.putExtra("wh_desc_id",wh_desc_id);
+                intent.putExtra("cat_selected",cat_selected);
                 if(uid_final.equals("tes") ){
                     intent.putExtra("no_uid", "Belum Ada Device Ter-Scan");
                 }else{
@@ -1210,6 +1215,9 @@ public class  ReaderActivity extends AppCompatActivity implements
         no_WTR=intent.getStringExtra("no_WTR");
         epoch = intent.getStringExtra("epoch");
         id_wtr=intent.getStringExtra("id_wtr");
+        wh_desc_id=intent.getStringExtra("wh_desc_id");
+        cat_selected = intent.getStringExtra("cat_selected");
+
         Log.d("URL_re", "onCreate: "+no_WTR);
         txt_wtr=findViewById(R.id.wtr_display);
         txt_wtr.setText(no_WTR);

@@ -60,6 +60,9 @@ public class ListWtrActivity extends AppCompatActivity implements Spinner.OnItem
     private JSONArray result;
     //tampungan  selected whs
     String whsc_selected;
+    String cat_selected;
+    String whdest_selected;
+    String cat;
 
     /** set up adapter **/
     ArrayList<WtrModel> dataItem = new ArrayList<>();
@@ -75,6 +78,11 @@ public class ListWtrActivity extends AppCompatActivity implements Spinner.OnItem
                     String no_WTR2 = model.getTitle();
                     String epoch = model.getEpoch();
                     String id_wtr = model.getId_wtr();
+                    String wh_desc_id=whdest_selected;
+                    String cat = cat_selected ;
+                   // String wh_desc_name=whdest_selected_name;
+                   // String wh_sc_id=whsc_selected;
+                    //String wh_sc_name=;
 
                     Log.d("URL_re", "onClick: gget title"+no_WTR);
                     final Intent intent = new Intent(ListWtrActivity.this, ReaderActivity.class);
@@ -83,6 +91,8 @@ public class ListWtrActivity extends AppCompatActivity implements Spinner.OnItem
                     intent.putExtra("no_WTR", no_WTR2 );
                     intent.putExtra("epoch", epoch );
                     intent.putExtra("id_wtr",id_wtr);
+                    intent.putExtra("wh_desc_id",wh_desc_id);
+                    intent.putExtra("cat_selected",cat_selected);
                     startActivity(intent);
                 }
             });
@@ -173,8 +183,8 @@ public class ListWtrActivity extends AppCompatActivity implements Spinner.OnItem
         mCari.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String cat_selected = sCategory.getSelectedItem().toString();
-                String whdest_selected = items_value_dest[ sWhDest.getSelectedItemPosition() ];
+                cat_selected = sCategory.getSelectedItem().toString();
+                whdest_selected = items_value_dest[ sWhDest.getSelectedItemPosition() ];
                // String whsc_selected = items_value_source[ sWhSource.getSelectedItemPosition() ];
                 Toast.makeText(ListWtrActivity.this,whsc_selected+" | "+whsc_selected,Toast.LENGTH_SHORT).show();
                 /** Call data **/
@@ -209,6 +219,80 @@ public class ListWtrActivity extends AppCompatActivity implements Spinner.OnItem
         });
 
         setUpView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        cat_selected = sCategory.getSelectedItem().toString();
+        whdest_selected = items_value_dest[ sWhDest.getSelectedItemPosition() ];
+        // String whsc_selected = items_value_source[ sWhSource.getSelectedItemPosition() ];
+        Toast.makeText(ListWtrActivity.this,whsc_selected+" | "+whsc_selected,Toast.LENGTH_SHORT).show();
+        /** Call data **/
+        requestJsonObjectA(new ReaderActivity.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONArray result) {
+                Log.d("Spinner",result.toString());
+
+                dataItem.clear();
+                for(int i = 0; i < result.length(); i++) {
+                    try {
+                        JSONObject jsonObject = result.getJSONObject(i);
+                        String judul= jsonObject.getString("no_wtr");
+                        String tanggal=jsonObject.getString("waktu");
+                        String epoch = jsonObject.getString("epoch");
+                        String id_wtr = jsonObject.getString("id_wtr");
+                        Log.d("wtr_no", judul);
+                        dataItem.add(new WtrModel(judul,tanggal,epoch,id_wtr));
+                    }
+                    catch(JSONException e) {
+                        dataItem.add(new WtrModel("Error: " + e.getLocalizedMessage(),"error_tgl","error epoch","error id wtr"));
+                    }
+                }
+                listView = (RecyclerView) findViewById(R.id.rv_wtr);
+
+                /** set up layout View **/
+                setUpView();
+            }
+        },cat_selected,whdest_selected,whsc_selected);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        cat_selected = sCategory.getSelectedItem().toString();
+        whdest_selected = items_value_dest[ sWhDest.getSelectedItemPosition() ];
+        // String whsc_selected = items_value_source[ sWhSource.getSelectedItemPosition() ];
+        Toast.makeText(ListWtrActivity.this,whsc_selected+" | "+whsc_selected,Toast.LENGTH_SHORT).show();
+        /** Call data **/
+        requestJsonObjectA(new ReaderActivity.VolleyCallback() {
+            @Override
+            public void onSuccess(JSONArray result) {
+                Log.d("Spinner",result.toString());
+
+                dataItem.clear();
+                for(int i = 0; i < result.length(); i++) {
+                    try {
+                        JSONObject jsonObject = result.getJSONObject(i);
+                        String judul= jsonObject.getString("no_wtr");
+                        String tanggal=jsonObject.getString("waktu");
+                        String epoch = jsonObject.getString("epoch");
+                        String id_wtr = jsonObject.getString("id_wtr");
+                        Log.d("wtr_no", judul);
+                        dataItem.add(new WtrModel(judul,tanggal,epoch,id_wtr));
+                    }
+                    catch(JSONException e) {
+                        dataItem.add(new WtrModel("Error: " + e.getLocalizedMessage(),"error_tgl","error epoch","error id wtr"));
+                    }
+                }
+                listView = (RecyclerView) findViewById(R.id.rv_wtr);
+
+                /** set up layout View **/
+                setUpView();
+            }
+        },cat_selected,whdest_selected,whsc_selected);
+
     }
 
     private void get_data_spinner() {

@@ -19,7 +19,7 @@ public abstract class Adapter <DataClass, ViewHolder extends RecyclerView.ViewHo
         this.mLayout = mLayout;
         this.viewHolderClass = viewHolderClass;
         this.data = data;
-       // this.callback=callback;
+        // this.callback=callback;
     }
 
     @NonNull

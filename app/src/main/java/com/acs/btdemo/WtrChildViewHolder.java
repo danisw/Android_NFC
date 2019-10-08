@@ -61,7 +61,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
     private Button btn_pick;
     private Integer flag_sisa;
 
-    private String epoch;
+    private String epoch,exp_date;
     // Flag 0 baru, 1 masih ada, 2 habis
 
     public WtrChildViewHolder(View itemView) {
@@ -169,7 +169,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                                         Log.d("obj_cek",jsonObject.toString());
 
                                                         if(jsonObject != null){
-                                                            String exp_date = jsonObject.getString("nic_expired");
+                                                            exp_date = jsonObject.getString("nic_expired");
                                                            // String no_rcv = jsonObject.getString("no_rcv");
                                                             String uid_rcv = jsonObject.getString("nic_uid_nfc");
                                                             String qty_rcv=jsonObject.getString("nic_qty");
@@ -404,7 +404,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                                             }
 
                                             String qty_picked2 = qty_temp.getText().toString();
-                                            postJsonObject(wtr_picked, kode_picked, nama_picked, qty_picked2, formattedDate,uid_card_nospace_p,epoch, no_lot);
+                                            postJsonObject(wtr_picked, kode_picked, nama_picked, qty_picked2, formattedDate,uid_card_nospace_p,epoch, no_lot,exp_date);
                                         }
                                     }
                                 })
@@ -439,7 +439,7 @@ public class WtrChildViewHolder extends RecyclerView.ViewHolder {
                         .setMessage(message)
                         .show();
             }
-            private void postJsonObject(final String wtr_picked, final String kode_picked, final String nama_picked, final String qty_picked, final String formattedDate, final String uid_picked, final String epoch, final String no_lot) {
+            private void postJsonObject(final String wtr_picked, final String kode_picked, final String nama_picked, final String qty_picked, final String formattedDate, final String uid_picked, final String epoch, final String no_lot, final String exp_date) {
                 RequestQueue queue = Volley.newRequestQueue(context);
                final String url2 ="http://10.1.250.116/rest-api/index.php/api/Item_2/index_post/";
                // final String url2 ="http://192.168.0.4/rest-api/index.php/api/Item_2/index_post/";

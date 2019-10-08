@@ -3,6 +3,7 @@ package com.acs.btdemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -10,10 +11,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSelectedListener{
     private String id_wtr;
@@ -39,10 +45,27 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
 
     Spinner sp_ket_retur;
 
-    String selected_name;
-    String selected_value;
+   private String selected_name;
+    private String selected_value;
 
     Button btn_konfirm;
+
+    String whs;
+    String nik;
+    String epoch;
+    String cat;
+    String USER_NFC;
+    String USER_WTR;
+    String wtr_id;
+    String PB;
+    String SUPIR;
+    String KON;
+    String NOPOL;
+    String NOSEAL;
+    String MEMO;
+
+
+    EditText kontainer, driver, plat, noseal, memo;
 
     //An ArrayList for Spinner Items
     private ArrayList<String> keterangan;
@@ -63,10 +86,17 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
             String i =(String) b.get("kode_WTR");
             String k = (String) b.get("dest_wh");
             String l = (String) b.get("sc_wh");
+            String m = (String) b.get("cat_selected");
+            String n = (String) b.get("no_uid");
+            String o = (String) b.get("epoch");
+
             id_wtr=j;
             kode_WTR=i;
             dest_wh=k;
             sc_wh=l;
+            cat=m;
+            epoch=o;
+
         }else{
             finish();
         }
@@ -77,6 +107,11 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
         dest_wh_txt = findViewById(R.id.dest_wh);
         sp_ket_retur= findViewById(R.id.ket_retur);
         btn_konfirm=findViewById(R.id.btn_konfirm);
+        kontainer=findViewById(R.id.kontainer);
+        driver = findViewById(R.id.driver);
+        plat= findViewById(R.id.nopol);
+        noseal=findViewById(R.id.noseal);
+        memo=findViewById(R.id.memo);
 
 
         id_wtr_txt.setText(id_wtr);
@@ -93,15 +128,90 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
         //get data Sinner
         get_data_spinner();
 
+        //get user session
+        Users user = SharedPrefManager.getInstance(this).getUser();
+        final String nik2=user.getUsername();
+
         btn_konfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DataHeaderWHT.this,selected_name+" | "+selected_value,Toast.LENGTH_SHORT).show();
+                String whs=dest_wh;
+                String nik=nik2;
+                String epoch2=epoch;
+                String cat2=cat;
+                String USER_NFC=nik;
+                String wtr_id=id_wtr_txt.getText().toString();
+                String PB=selected_value;
+                String SUPIR = driver.getText().toString();
+                String KON=kontainer.getText().toString();
+                String NOPOL=plat.getText().toString();
+                String NOSEAL=noseal.getText().toString();
+                String MEMO = memo.getText().toString();
+                Log.d("is_berisi", "onClick: "+whs+" "+nik+" "+epoch2+" "+cat2+" "+USER_NFC+" "+wtr_id+" "+PB+" "+SUPIR+" "+KON+" "+NOPOL+" "+NOSEAL+" "+MEMO);
+
+                postJsonObject(whs,nik,epoch2,cat2,USER_NFC,wtr_id,PB,SUPIR,KON,NOPOL,NOSEAL,MEMO);
+
+
+
             }
         });
 
     }
 
+    private void postJsonObject(final String whs, final String nik, final String epoch, final String cat,
+                                final String USER_NFC, final String wtr_id, final String PB,final String SUPIR,final String KON,final String NOPOL,
+                                final String NOSEAL, final String MEMO ) {
+        RequestQueue queue2 = Volley.newRequestQueue(getApplicationContext());
+        final String url2 ="http://10.1.250.116/rest-api/index.php/api/Final_input/index_post/";
+        // final String url2 ="http://192.168.0.4/rest-api/index.php/api/Item_2/index_post/";
+
+        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, url2, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                //Toast.makeText(context, "Input Item Successed !", Toast.LENGTH_SHORT).show();
+                Log.d("my_suc", "onResponse: "+url2);
+                alert2("berhasil", response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                alert2("Gagal",error.getMessage()+" | "+whs+" "+nik+" "+epoch+" "+cat+" "+USER_NFC+" "+wtr_id+ " "+ PB+" "+SUPIR+" "+KON+" "+NOPOL+" "+NOSEAL+" "+MEMO);
+                Log.d("response_put", "Error " + error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> map = new HashMap<String, String>();
+                map.put("whs",whs);
+                map.put("nik",nik);
+                map.put("epoch",epoch);
+                map.put("cat",cat);
+                map.put("USER_NFC",USER_NFC);
+                map.put("wtr_id",wtr_id);
+                map.put("PB", PB);
+                map.put("SUPIR", SUPIR);
+                map.put("KON", KON);
+                map.put("NOPOL", NOPOL);
+                map.put("NOSEAL", NOSEAL);
+                map.put("MEMO", MEMO);
+
+                return map;
+            }
+        };
+
+        queue2.add(stringRequest2);
+    }
+    public void alert2(String Judul, String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(DataHeaderWHT.this)
+                //set icon
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                //set title
+                .setTitle(Judul)
+                //set message
+                .setMessage(message)
+                .show();
+    }
     private void get_data_spinner() {
         //Creating a string request
         StringRequest stringRequest = new StringRequest(SpinnerRetur.DATA_URL,
@@ -200,7 +310,7 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
         selected_name="";
-        selected_name="";
+        selected_value="";
 
     }
 }

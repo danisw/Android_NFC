@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -31,7 +32,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
     EditText editTextUsername, editTextPassword;
     ProgressBar progressBar;
-    String id_user_db, username_db, nama_db;
+    String id_user_db, username_db, nama_db, wh_id, wh_name;
     AnimationDrawable animationDrawable;
     
     @Override
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
-            startActivity(new Intent(this, DeviceScanActivity.class));
+            startActivity(new Intent(this, UserProfile.class));
         }
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -116,12 +117,14 @@ public class LoginActivity extends AppCompatActivity {
                                     id_user_db       = jsonobject.getString("id");
                                     username_db    = jsonobject.getString("username");
                                     nama_db = jsonobject.getString("nama");
+                                    wh_id   =jsonobject.getString("WH_ID");
+                                    wh_name = jsonobject.getString("wh_name");;
                                 }
-                                Users user =new Users(id_user_db,username,nama_db);
+                                Users user =new Users(id_user_db,username,nama_db,wh_id,wh_name);
                                 SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
                                 //starting the profile activity
                                 finish();
-                                startActivity(new Intent(getApplicationContext(), DeviceScanActivity.class));
+                                startActivity(new Intent(getApplicationContext(), UserProfile.class));
                             }else{
                                 Log.d("error_obj_array", "ERROR ARRAY NULL");
                             }
@@ -135,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        alert("Gagal Login",""+error.getMessage());
                     }
                 })  {
             @Override
@@ -148,5 +152,13 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    public void alert(String Judul, String message){
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(Judul)
+                .setMessage(message)
+                .show();
     }
 }
