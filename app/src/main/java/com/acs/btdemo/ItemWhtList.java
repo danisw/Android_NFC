@@ -158,6 +158,7 @@ public class ItemWhtList extends AppCompatActivity {
                 intent.putExtra("epoch",epoch);
                 intent.putExtra("cat_selected",cat_selected);
                 startActivity(intent);
+
             }
         });
 
@@ -183,7 +184,7 @@ public class ItemWhtList extends AppCompatActivity {
                 /** set up layout View **/
                 setUpView();
             }
-        }, kode_wtr);
+        }, kode_wtr,epoch);
 
         setUpView();
     }
@@ -217,9 +218,9 @@ public class ItemWhtList extends AppCompatActivity {
     }
 
     /** Calling Data Function **/
-    private void requestJsonObjectA(final ReaderActivity.VolleyCallback callback, String No_WTR) {
+    private void requestJsonObjectA(final ReaderActivity.VolleyCallback callback, String No_WTR, String epoch) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://10.1.250.116/rest-api/index.php/api/Item_picked/"+No_WTR;
+        String url ="http://10.1.250.116/rest-api/index.php/api/Item_picked/"+No_WTR+"/"+epoch;
         //String url ="http://192.168.0.4/rest-api/index.php/api/Item_picked/"+No_WTR;
 
         Log.d("ItemPickedwtr", url);

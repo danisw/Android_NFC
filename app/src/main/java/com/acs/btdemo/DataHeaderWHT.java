@@ -171,6 +171,7 @@ public class DataHeaderWHT extends AppCompatActivity implements Spinner.OnItemSe
                 //Toast.makeText(context, "Input Item Successed !", Toast.LENGTH_SHORT).show();
                 Log.d("my_suc", "onResponse: "+url2);
                 alert2("berhasil", response.toString());
+                btn_konfirm.setEnabled(false);
             }
         }, new Response.ErrorListener() {
             @Override

@@ -36,10 +36,10 @@
         </LinearLayout>
 
         <android.support.v7.widget.CardView
-            android:layout_width="400dp"
-            android:layout_height="120dp"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="260dp">
+            android:layout_marginTop="300dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -215,38 +215,4 @@
             android:id="@+id/up_btn_next"
             />
     </LinearLayout>
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edittext"
-        android:columnCount="2"
-        android:rowCount="2"
-        android:padding="10dp">
-
-        <TextView
-            android:background="#F44336"
-            android:textSize="20sp"
-            android:text="1st"
-            android:layout_columnWeight="9"
-            android:layout_rowWeight="1"
-            />
-
-        <TextView
-            android:background="#2196f3"
-            android:textSize="20sp"
-            android:text="2nd"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="6"/>
-
-        <TextView
-            android:background="#9C27B0"
-            android:textSize="20sp"
-            android:text="2nd"
-            android:layout_columnWeight="1"
-            android:layout_columnSpan="2"
-            android:layout_rowWeight="0"/>
-
-    </GridLayout>
-
 </LinearLayout>

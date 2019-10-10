@@ -30,6 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -331,7 +332,6 @@ public class  ReaderActivity extends AppCompatActivity implements
         //btn_save= findViewById(R.id.save_to_wht);
         btn_connect = findViewById(R.id.button_Connect);
         fab=findViewById(R.id.fab_save);
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1592,50 +1592,50 @@ public class  ReaderActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         /* Inflate the menu; this adds items to the action bar if it is present. */
-        getMenuInflater().inflate(R.menu.reader, menu);
-        if (mConnectState == BluetoothReader.STATE_CONNECTED) {
-            menu.findItem(R.id.menu_connect).setVisible(false);
-            menu.findItem(R.id.menu_connecting).setVisible(false);
-            menu.findItem(R.id.menu_disconnect).setVisible(true);
-        } else if (mConnectState == BluetoothReader.STATE_CONNECTING) {
-            menu.findItem(R.id.menu_connect).setVisible(false);
-            menu.findItem(R.id.menu_connecting).setVisible(true);
-            menu.findItem(R.id.menu_disconnect).setVisible(false);
-            menu.findItem(R.id.menu_refresh).setActionView(
-                    R.layout.actionbar_indeterminate_progress);
-        } else {
-            menu.findItem(R.id.menu_connect).setVisible(true);
-            menu.findItem(R.id.menu_connecting).setVisible(false);
-            menu.findItem(R.id.menu_disconnect).setVisible(false);
-        }
+//        getMenuInflater().inflate(R.menu.reader, menu);
+//        if (mConnectState == BluetoothReader.STATE_CONNECTED) {
+//            menu.findItem(R.id.menu_connect).setVisible(false);
+//            menu.findItem(R.id.menu_connecting).setVisible(false);
+//            menu.findItem(R.id.menu_disconnect).setVisible(true);
+//        } else if (mConnectState == BluetoothReader.STATE_CONNECTING) {
+//            menu.findItem(R.id.menu_connect).setVisible(false);
+//            menu.findItem(R.id.menu_connecting).setVisible(true);
+//            menu.findItem(R.id.menu_disconnect).setVisible(false);
+//            menu.findItem(R.id.menu_refresh).setActionView(
+//                    R.layout.actionbar_indeterminate_progress);
+//        } else {
+//            menu.findItem(R.id.menu_connect).setVisible(true);
+//            menu.findItem(R.id.menu_connecting).setVisible(false);
+//            menu.findItem(R.id.menu_disconnect).setVisible(false);
+//        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case R.id.menu_connect:
-            /* Connect Bluetooth reader */
-            Log.v(TAG, "Start to connect!!!");
-            connectReader();
-            return true;
-        case R.id.menu_connecting:
-        case R.id.menu_disconnect:
-            /* Disconnect Bluetooth reader */
-            Log.v(TAG, "Start to disconnect!!!");
-            disconnectReader();
-            return true;
-        case android.R.id.home:
-            onBackPressed();
-            return true;
-        case R.id.menu_about:
-            DialogFragment fragment = new VersionInfoDialogFragment();
-            fragment.show(getSupportFragmentManager(), "VersionInfo");
-            return true;
-        default:
-            break;
-        }
-        return super.onOptionsItemSelected(item);
+//        switch (item.getItemId()) {
+//        case R.id.menu_connect:
+//            /* Connect Bluetooth reader */
+//            Log.v(TAG, "Start to connect!!!");
+//            connectReader();
+//            return true;
+//        case R.id.menu_connecting:
+//        case R.id.menu_disconnect:
+//            /* Disconnect Bluetooth reader */
+//            Log.v(TAG, "Start to disconnect!!!");
+//            disconnectReader();
+//            return true;
+//        case android.R.id.home:
+//            onBackPressed();
+//            return true;
+//        case R.id.menu_about:
+//            DialogFragment fragment = new VersionInfoDialogFragment();
+//            fragment.show(getSupportFragmentManager(), "VersionInfo");
+//            return true;
+//        default:
+//            break;
+//        }
+       return super.onOptionsItemSelected(item);
     }
 
     /* Show and hide UI resources and set the default master key and commands. */

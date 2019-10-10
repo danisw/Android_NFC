@@ -207,8 +207,8 @@ public class DeviceScanActivity extends ListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
+       // Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar2);
+        //setSupportActionBar(toolbar);
         //toolbar.inflateMenu(R.menu.main);
 //        getMenuInflater().inflate(R.menu.main, menu);
 //        for (int i = 0; i < menu.size(); i++) {
